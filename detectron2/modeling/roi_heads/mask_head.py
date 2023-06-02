@@ -258,6 +258,19 @@ class MaskRCNNConvUpsampleHead(BaseMaskRCNNHead, nn.Sequential):
         )
         self.add_module("deconv_relu", nn.ReLU())
         cur_channels = conv_dims[-1]
+        
+        ########## Start the object removal layer #############
+        self.object_removal = Conv2d(
+            cur_channels,
+            1,  # Single channel for object removal mask
+            kernel_size=1,
+            stride=1,
+            padding=0,
+        )
+        self.add_module("object_removal", self.object_removal)
+        cur_channels = 1
+        
+        ########## End the object removal layer #############
 
         self.predictor = Conv2d(cur_channels, num_classes, kernel_size=1, stride=1, padding=0)
 
@@ -287,6 +300,13 @@ class MaskRCNNConvUpsampleHead(BaseMaskRCNNHead, nn.Sequential):
     def layers(self, x):
         for layer in self:
             x = layer(x)
+        
+        ########## Start Apply the object removal layer ##########
+        object_removal_mask = self.object_removal(x)
+        x = x * (1 - object_removal_mask)
+        
+        ########## End Apply the object removal layer ##########
+
         return x
 
 

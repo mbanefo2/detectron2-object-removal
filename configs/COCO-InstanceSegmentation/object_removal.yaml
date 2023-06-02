@@ -1,0 +1,6 @@
+MODEL:
+  ROI_MASK_HEAD:
+    NAME: "MaskRCNNConvUpsampleHead"
+    OBJECT_REMOVAL:
+      ENABLED: True
+      CONV_DIM: 256
