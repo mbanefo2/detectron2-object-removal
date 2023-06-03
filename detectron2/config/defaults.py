@@ -358,6 +358,9 @@ _C.MODEL.ROI_MASK_HEAD.CLS_AGNOSTIC_MASK = False
 # Type of pooling operation applied to the incoming feature map for each RoI
 _C.MODEL.ROI_MASK_HEAD.POOLER_TYPE = "ROIAlignV2"
 
+# Adding object removal config
+_C.MODEL.ROI_MASK_HEAD.ENABLE_OBJECT_REMOVAL = True
+_C.MODEL.ROI_MASK_HEAD.OBJECT_REMOVAL.CONV_DIM = 256
 
 # ---------------------------------------------------------------------------- #
 # Keypoint Head

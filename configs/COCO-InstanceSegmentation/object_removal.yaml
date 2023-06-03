@@ -1,6 +1,7 @@
+_BASE_: "../Base-RCNN-FPN.yaml"
 MODEL:
   ROI_MASK_HEAD:
     NAME: "MaskRCNNConvUpsampleHead"
+    ENABLE_OBJECT_REMOVAL: True
     OBJECT_REMOVAL:
-      ENABLED: True
       CONV_DIM: 256
